@@ -1,0 +1,31 @@
+{
+  "name": "notekeep.app",
+  "version": "1.0.0",
+  "description": "This application can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EMA1970/NoteKeep.app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EMA1970/NoteKeep.app/issues"
+  },
+  "homepage": "https://github.com/EMA1970/NoteKeep.app#readme",
+  "dependencies": {
+    "app": "^0.1.0",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "uuid": "^9.0.0"
+  }
+}
