@@ -1,0 +1,39 @@
+{
+    "notes": [
+      {
+        "title": "Welcome",
+        "text": "This app allows you to add notes. You can add notes by clicking the pencil icon",
+        "id": "0"
+      },
+      {
+        "title": "Deleting Notes is a work in progress",
+        "text": "Eventually you will have the ability to delete notes created. Running into issues there right now.",
+        "id": "1"
+      },
+      {
+        "title": "Balance Sheet",
+        "text": "On Tuesday",
+        "id": "2"
+      },
+      {
+        "title": "Cash",
+        "text": "fghfstjrtu",
+        "id": "3"
+      },
+      {
+        "title": "rfjksfksr",
+        "text": "fghfstjrtu",
+        "id": "4"
+      },
+      {
+        "title": "My note",
+        "text": "My Note",
+        "id": "5"
+      },
+      {
+        "title": "sfgjsgj",
+        "text": "sjdgjstgj",
+        "id": "6"
+      }
+    ]
+  }

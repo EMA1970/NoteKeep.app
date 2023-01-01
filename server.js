@@ -1,106 +1,50 @@
-
-//import modules; 
+//asking app to listen on port 3306 -in the terminal it should say now listening on port... if it worked correctly 
+//https://www.npmjs.com/package/dotenv dotenv is a great way to keep important items like passwords or api keys safe for
+const PORT = process.env.PORT || 3001;
+// https: //expressjs.com/en/starter/hello-world.html
+//make sure you have express installed npm install express --save
 const express = require('express');
 const app = express();
+
+//https: //www.npmjs.com/package/nodemon
 const fs = require('fs');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
-const util = require("util");
 
-//set up server 
-const PORT = process.env.PORT || 3306;
-
-
-// building scalable and highly responsive applications
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
+//"we are requiring Express and creating a new instance of Router on it. We are holding that in a variable called routes. Then we are creating a route at the root path of this Router that sends back a simple message. Then we export the Router."
+//https://scotch.io/tutorials/keeping-api-routing-clean-using-express-routers
+//this link talks about understanding and keeping routes organized
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
 
-//. This middleware  parses the req.body and adds the resulting object as a property of the req.object. This helps the computer program to process and understand the information sent to site. It helps the program understand the structore and what each part means which can be used to add into the database.
-//setting up routes to recognize response as a JSON. 
-app.use(express.urlencoded({ extended: true }));
+//urlencoded() function = a built-in middleware function in Express
+//https://www.google.com/search?q=app.use(express.urlencoded(%7B&rlz=1C5CHFA_enUS956US956&oq=app.use(express.urlencoded(%7B&aqs=chrome..69i57j0i512l3j0i30l3.1374j0j15&sourceid=chrome&ie=UTF-8
+app.use(express.urlencoded({
+    extended: true
+}));
+
+//static files - specifies the root directory from which to serve static assets https://expressjs.com/en/starter/static-files.html
+//adds a middleware - To serve static files such as images, CSS files, and JavaScript file
+// https: //www.google.com/search?q=app.use(express.static&rlz=1C5CHFA_enUS956US956&oq=app.use(express.static&aqs=chrome..69i57j0i512l9.1090j0j15&sourceid=chrome&ie=UTF-8
+app.use(express.static('public'));
 app.use(express.json());
 
-//use the express.static middleware to serve static files 
-app.use(express.static(path.join(__dirname, "./develop/public")));
+//"bringing in Express and our routes. We are connecting our routes to our application using .use"
+//https: //scotch.io/tutorials/keeping-api-routing-clean-using-express-routers
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
-//Static Middleware to check if the requested resource is availaible in the public folder. 
-app.use(express.static("./develop/public"));
-
-
-// API Routes | "GET" request - read content of file and parse it as JSON. Then stores the data in the 'notes' variable and sends it back to the client using the 'res.json' function. 
-app.get("/api/notes", function (req, res) {
-    readFileAsync("./develop/db/db.json", "utf8").then(function (data) {
-        //stores the data in the notes variable and sends it back to the client using 'res.json' function
-        notes = [].concat(JSON.parse(data))
-        //sets the response body to the provided data and set the content type to "application/json"
-        res.json(notes);
-    })
-
+//app.listen() Function https://www.geeksforgeeks.org/express-js-app-listen-function/
+//function is used to bind and listen the connections on the specified host and port
+//app.listen() = an asynchronous operation
+//https: //www.google.com/search?q=app.listen(PORT,+()+%3D%3E+%7B&rlz=1C5CHFA_enUS956US956&ei=UTg9Ydy9Bo_L0PEPnIqtgA8&oq=app.listen(PORT,+()+%3D%3E+%7B&gs_lcp=Cgdnd3Mtd2l6EAMyCAgAEIAEELADMggIABCABBCwAzIICAAQgAQQsAMyCAgAEIAEELADMggIABCABBCwAzIICAAQgAQQsAMyCAgAEIAEELADMggIABCABBCwAzIHCAAQsAMQHjIICAAQgAQQsAMyCAgAEOQCELADMggIABDkAhCwAzIICAAQ5AIQsANKBQg8EgExSgQIQRgBULrxfli68X5g9fd-aAFwAHgAgAEAiAEAkgEAmAEAoAECoAEByAENwAEB&sclient=gws-wiz&ved=0ahUKEwicqs6khvjyAhWPJTQIHRxFC_AQ4dUDCA4&uact=5&pccc=1
+app.listen(PORT, () => {
+    //debugging
+    console.log(`API server now on port ${PORT}!`);
 });
 
-//API Route | "POST" request- when a client sends a POST request to this endpoint the server will read the database and push 
-app.post("/api/notes", function (req, res) {
-    // set the new note as the request body
-    const note = req.body;
-    readFileAsync("./develop/db/db.json", "utf8")
-        .then(function (data) {
-            //add note to whats already existed 
-            const notes = [].concat(JSON.parse(data))
-            notes.id = uuid4();//generates a unique identifieer for the note
-            //add the new note to the array of notes 
-            notes.push(note);
-            return notes;
-        })
-        .then(function (notes) {
-            // send a response to the client indicating that the operation was successful 
-            return writeFileAsync("./develop/db/db.json", JSON.stringify(notes));
-        })
-        .catch(function (err) {
-            // if there was an error reading the file or writing to, send a response to the client indicating the operation failed 
-            res.sendStatus(500)
-        })
 
-});
-
-// Steps for deleting a note 
-//API Route | detelete request. 
-app.delete("/api/notes/:id", async function (req, res) {
-    try {
-        //validates the id parameter
-        const id = req.params.id;
-        if (!id || typeof id !== 'string') {
-            return res.status(400).send({error: 'Invalid id parameter'});
-        }
-        // Read the notes from the file 
-        const data = await readFileAsync("./develop/db/db.json","utf8")
-        const notes = JSON.parse(data);
-        
-        // Remove the note with the specified id from the array 
-        const updatedNotes = notes.filter(function(note) {
-            return note.id !==id;
-        }); 
-
-        //write the updated notes to the file 
-        await writeFileAsync("./develop/db/db.json", JSON.stringify(updatedNotes)); 
-
-        // Send a response to the client indicating that the oepration was successful 
-        res.sendStatus(200);
-    } catch(error) {
-        //handle any error that might occur 
-        console.error(error);
-        res.sendStatus(500);
-    }
-    });
-
-
-
-// HTML Routes 
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "./develop/public/index.html"));
-});
-
-//listening on `PORT` environment. 
-app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT); 
-}).on("error", console.error);
+//node server.js
+//npm install -g nodemon then nodemon server.js
+//i prefer running my programs with Nodemon file.js so that i don't have to exit and restart the server
+//you can use control c to exit the process at anytime (that is on a mac it may vary for other systems)

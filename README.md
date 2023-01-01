@@ -24,10 +24,15 @@ This application can be used by professionals in any sector of the field because
 Please follow the following steps to run the application locally on your machine: 
 1. Clone this repo. 
 2. Open the integrated terminal from 'server.js'.
-3. Inside of terminal, enter NPM I and then npm start. A message will be received saying that the server is being listened to on port 3306. 
-4. In browser, type 'http://localhost:3306'.
-5. The site should display on your machine. 
-6. Enter values for notes. 
+3. Inside of terminal, enter the following commands 
+   1. npm init -y 
+   2. npm i 
+   3. npm i express  
+   4. npm i uuid
+4. A message will be received saying that the server is being listened to on port 3306. 
+5. In browser, type 'http://localhost:3306'.
+6. The site should display on your machine. 
+7. Enter values for notes. 
 
 ## Screenshot 
 
