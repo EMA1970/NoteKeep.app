@@ -1,4 +1,4 @@
-***** TODO: add screenshot. 
+
 # NoteKeep.app
 
 ## Table of Content 
@@ -35,6 +35,7 @@ Please follow the following steps to run the application locally on your machine
 7. Enter values for notes. 
 
 ## Screenshot 
+<img width="824" alt="Screen Shot 2022-12-31 at 4 44 03 PM" src="https://user-images.githubusercontent.com/114694158/210158328-19f6ccd9-6283-46a3-b0f6-db3400d9be0e.png">
 
 ## Development 
 
