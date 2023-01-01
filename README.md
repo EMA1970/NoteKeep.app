@@ -42,14 +42,6 @@ Please follow the following steps to run the application locally on your machine
 Main languages: javascript, css, html. 
 Open sourced libraries used: node.js, npm express,npm fs,npm path. 
 
-## Troubleshooting 
-
-If any errors occurs when running the application, a suggestion box is displayed to contact system support. We should be returning your email within 3 - 5 days.
-
-## Contributing 
-
-This application is designed as a free resource for any professionals. The best way to contribute to future development is through constructive criticisms feedbacks. We would love to know users opinions on ways to  improve and sustain.  
-
 ## License 
 MIT license 
 
